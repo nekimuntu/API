@@ -19,6 +19,7 @@ namespace API
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
+                //SECTION 3 ACHITECTURE on create and migrate Database
                 var loggerFactory = services.GetRequiredService<ILoggerFactory>();
                 try
                 {
@@ -33,6 +34,7 @@ namespace API
                 }
             }
             host.Run();
+            //End SECTION 3
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

@@ -4,6 +4,8 @@ namespace API.Controllers
 {    //TODO: i changed the profile entry in the launchSettings.json it to API when it was http
     [ApiController]
     [Route("[controller]")]
+    [ApiExplorerSettings(IgnoreApi = true)]
+    
     public class WeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
