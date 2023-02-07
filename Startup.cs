@@ -38,13 +38,15 @@ namespace API
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             
-            app.UseStatusCodePagesWithReExecute("/Error/{0}");
-            ///SECTION 5 video 52 : Errors handling with Middleware
+            // app.UseDeveloperExceptionPage();
+           
+             ///SECTION 5 video 52 : Errors handling with Middleware
             //It needs to be after UseStatus.... in The version with Startup.cs 
             app.UseMiddleware<ExceptionMiddleware>();
+            app.UseStatusCodePagesWithReExecute("/Error/{0}");
             ///End Section 5 \\\
+            
            
-            app.UseDeveloperExceptionPage();
             ///SECTION 5 we delete the if statement that would activate Swagger for Dev only
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebAPIv5 v1"));
@@ -54,13 +56,17 @@ namespace API
 
             app.UseRouting();
             app.UseStaticFiles();
-
+            ///SECTION 6 CORS \\\\
+            ///Important to place it before UseAuthorization 
+            app.UseCors("CorsPolicy");
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+            
+            
         }
     }
 }

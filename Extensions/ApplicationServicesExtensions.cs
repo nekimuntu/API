@@ -12,16 +12,15 @@ namespace API.Extensions
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, 
                                                             IConfiguration config){
 
+       
+              
         ///SECTION 4 Generic Repository and SPecifications
             services.AddScoped<IProductRepository,ProductRepository>();
             services.AddScoped(typeof(IGenericRepository<>),typeof(GenericRepository<>));
             ///End S4 \\\
             services.AddAutoMapper(typeof(MappingProfiles));
-            services.AddControllers();                     
-            services.AddDbContext<StoreContext>(x=>
-                                    x.UseSqlite(config.GetConnectionString("DefaultConnection")));
-            
-            ///SECTION 5 video 53: Errors Handling | Validation errors
+            services.AddControllers();       
+             ///SECTION 5 video 53: Errors Handling | Validation errors
             ///I place it here to be able to handle any exceptions raised by the services above
             services.Configure<ApiBehaviorOptions>(options => {
                 options.InvalidModelStateResponseFactory = actionContext =>{
@@ -37,8 +36,16 @@ namespace API.Extensions
                                                 };
                     return new BadRequestObjectResult(errorResponse);
                 };
-            });
-            /// End Section 5 \\\   
+            });      
+            /// End Section 5 \\\         
+            services.AddDbContext<StoreContext>(x=>
+                                    x.UseSqlite(config.GetConnectionString("DefaultConnection")));
+            
+            ///SECTION 6 CORS \\\\\\
+            services.AddCors(opt=> opt.AddPolicy("CorsPolicy",
+                             policy =>{
+                                policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200");
+                            }));
         return services;
         }
                                                             
