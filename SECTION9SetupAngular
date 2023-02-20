@@ -1,0 +1,63 @@
+1st lets check option available with Angular
+
+>ng g --help
+
+>ng g m core ( -dry-run : check wich files will be created) 
+PS C:\PROGRAMMING\CSHARP\skinet\API\client> ng g m shared
+C:\PROGRAMMING\CSHARP\skinet\API\client> ng g m shop
+
+we ll move the NavBar into core module 
+can remove the import from app.module 
+
+add import and export in core module: 
+import { NavBarComponent } from './nav-bar/nav-bar.component';
+
+@NgModule({
+  declarations: [
+    NavBarComponent
+  ],
+  imports: [
+    CommonModule
+  ],
+  exports:[
+    NavBarComponent
+  ]
+})
+
+We move the models into the shared folder as it will shared among the application 
+
+The refactoring is automatic (means we dont have to manually change the location of the imports in app.components )
+
+we createa  component 
+
+>ng g c shop/shop --flat --skip-tests
+
+flat is to avoid to creae a new shop sub folder
+
+we gonna create a service 
+>ng g s shop/shop --ski-tests
+
+>ng g m shop/shop-routing --flat
+
+----------------------_________________------------------------
+
+So now the shop module and component will be displaying products 
+
+so we needs to add the imports in app.modules to say thaat we will use it
+ and EXPORTS in shop.module
+
+ ______________________________________________________
+
+ Vid 90 design shop place 
+ shop.componennt.html : 
+
+ <div class=container>
+    <div class="row>
+        <section class='col3'>
+            filters
+        <section class='col9'>
+            Main content
+
+            _________________________________________________
+
+>ng g c shop/product-item --skip-tests
