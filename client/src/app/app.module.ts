@@ -9,6 +9,7 @@ import {HttpClientModule} from '@angular/common/http'  ///////SECTION 8 injectin
 import { CoreModule } from './core/core.module';
 import { ShopComponent } from './shop/shop.component';
 import { ShopModule } from './shop/shop.module';
+import { HomeModule } from './home/home.module';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,7 @@ import { ShopModule } from './shop/shop.module';
     BrowserAnimationsModule,
     HttpClientModule,  ///////SECTION 8 injecting services when Angular load
     CoreModule,
-    ShopModule
+    HomeModule ////Section 10 
   ],
   providers: [],
   bootstrap: [AppComponent]
