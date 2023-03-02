@@ -4,6 +4,7 @@ using Core.Interfaces;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using StackExchange.Redis;
 
 namespace API.Extensions
 {
@@ -36,7 +37,7 @@ namespace API.Extensions
                                                 };
                     return new BadRequestObjectResult(errorResponse);
                 };
-            });      
+            });                  
             /// End Section 5 \\\         
             services.AddDbContext<StoreContext>(x=>
                                     x.UseSqlite(config.GetConnectionString("DefaultConnection")));
@@ -46,6 +47,12 @@ namespace API.Extensions
                              policy =>{
                                 policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200");
                             }));
+            services.AddSingleton<IConnectionMultiplexer>(c=>
+                    {
+                        var multiplexer = ConfigurationOptions.Parse(config.GetConnectionString("Redis"));
+                        return ConnectionMultiplexer.Connect(multiplexer);
+                    });
+            services.AddScoped<IBasketRepository, BasketRepository>();
         return services;
         }
                                                             

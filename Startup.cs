@@ -13,6 +13,9 @@ namespace API
     public class Startup
     {
         private readonly IConfiguration _configuration;
+
+        public int IConnectionMultiplexer { get; private set; }
+
         public Startup(IConfiguration configuration)
         {
             _configuration = configuration;
@@ -26,6 +29,7 @@ namespace API
             /// Every services are moved to ApplicationServicesExtensions
             //This is more for esthetic and readability 
             services.AddApplicationServices(_configuration);
+            
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebAPIv5", Version = "v1" });
