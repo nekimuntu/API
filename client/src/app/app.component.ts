@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Product } from './shared/models/product';
 import { Pagination } from './shared/models/pagination';
+import { BasketService } from './basket/basket.service';
 
 @Component({
   selector: 'app-root',
@@ -10,10 +11,18 @@ import { Pagination } from './shared/models/pagination';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+  title = 'Yannick Shop';
+  //SECTION 14 get basket available throughout the app
+  constructor(private basketService : BasketService){}
+
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+    const basketId = localStorage.getItem('basket_id');
+    //So now because we call this getBasket when the app load
+    //it is available for all the app: You an see it in the network tab of developer tool in Chrome
+    //before it would be accessible only if you add something to the basket....but not available when coming back to the landing page
+    if (basketId) this.basketService.getBasket(basketId)
   }
-  title = 'Skinet';
+  
   ///////SECTION 8 injecting services when Angular load
   // products : Product[] = [];
   // constructor(private http: HttpClient){}

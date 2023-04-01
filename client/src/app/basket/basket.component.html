@@ -1,0 +1,84 @@
+<div class="container">
+    <div *ngIf="(basketService.basketSource$ | async) === null">
+            <p>No items in your basket</p>
+    </div>
+    <ng-container *ngIf="(basketService.basketSource$ | async) as basket">
+        <div class="container">
+            <div class="row">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="bg-dark text-uppercase">
+                            <tr>
+                                <th><div class="py-2 text-light">Product</div></th>
+                                <th><div class="py-2 text-light">Price</div></th>
+                                <th><div class="py-2 text-light">Quantity</div></th>
+                                <th><div class="py-2 text-light">Total</div></th>
+                                <th><div class="py-2 text-light">Remove</div></th>
+                            </tr>                        
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of basket.items">
+                                <th>
+                                    <div class="py-2 d-inline-bloc">
+                                        <img src="{{item.pictureUrl}}" 
+                                            alt="{{item.productName}}" 
+                                            class="img-fluid"
+                                            style="max-height: 100px; cursor: pointer;"
+                                        >
+                                        <div class="ms-3 d-inline-bloc align-middle">
+                                            <h5 class="mb-0">
+                                                <a routerLink="/shop/{{item.id}}" class="text-dark text-decoration-none">
+                                                    {{item.productName}}
+                                                </a> 
+                                            </h5>   
+                                            <span class="text-muted fst-italic">
+                                                Type: {{item.type}}
+                                            </span>
+                                        </div>
+                                    </div>                                    
+                                </th>
+                                <td class="align-middle">
+                                    <div class="py-2 d-inline-bloc"><strong>{{item.price}}</strong></div>
+                                </td>
+                                <td class="align-middle">
+                                    <div class="d-flex align-items-center">
+                                        
+                                        <i class="fa fa-minus-circle text-warning me-2" 
+                                            style="cursor: pointer;font-size: 2em;" 
+                                            (click)="removeItem(item.id)"
+                                            ></i>
+                                        <strong style="font-size: 1.5em;">{{item.quantity}}</strong>
+                                        <i class="fa fa-plus-circle text-warning ms-2" 
+                                            style="cursor: pointer;font-size: 2em;" 
+                                            (click)="incrementQuantity(item)"                                            
+                                            ></i>                                        
+                                    </div>
+                                </td>
+                                <td class="align-middle">
+                                    <strong>
+                                        <div class="py-2 d-inline-bloc">{{getTotal(item.quantity,item.price) | currency}}</div>
+                                    </strong>
+                                </td>
+                                <td class="align-middle">
+                                     <a class="text-danger" (click)="removeItem(item.id,item.quantity)"> 
+                                        <i class="fa fa-trash" style="font-size:2em;cursor: pointer;"></i>
+                                     </a> </td>
+                            </tr>                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6 offset-6">
+                    <app-order-totals></app-order-totals>
+                    <div class="d-grid">
+                        <a routerLink="/checkout" class="btn btn-outline-primary mb-4 py-2">
+                            Proceed to Checkout
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</div>

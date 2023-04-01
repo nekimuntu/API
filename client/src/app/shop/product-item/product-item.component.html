@@ -5,15 +5,15 @@
     <img src="{{product.pictureUrl}}" alt="{{product.name}}" class="img-fluid bg-info">
     <div class="d-flex align-items-center justify-content-center hover-overlay">
       <!-- hover-overlay is a custom class for us  -->
-      <button class="btn btn-primary fa fa-shopping-cart me-2"></button>
+      <button (click)="addItemToBasket()" class="btn btn-primary fa fa-shopping-cart me-2"></button>
       <button class="btn btn-primary" routerLink="/shop/{{product.id}}">View </button>
     </div>
   </div>
   
 
     <div class="card-body d-flex flex-column">
-      <a href="" class="text-decoration-none">
-        <h5 class="text-uppercase">{{product.name}}</h5>
+      <a routerLink="/shop/{{product.id}}" class="text-decoration-none">
+        <h5  class="text-uppercase">{{product.name}}</h5>
       </a>
       <span class="mb-2">{{product.price|currency}}</span>
       <!-- <p class="card-text">{{product.description}}</p> -->
